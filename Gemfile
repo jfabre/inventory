@@ -8,6 +8,7 @@ gem 'rails', '~> 6.0.0'
 gem 'haml-rails'
 gem 'faye-websocket'
 gem 'eventmachine'
+gem 'awesome_print'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.4'
