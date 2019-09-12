@@ -45,4 +45,3 @@ class Shoe < ApplicationRecord
     end
   end
 end
-

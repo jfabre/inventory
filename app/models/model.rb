@@ -1,5 +1,7 @@
 class Model < ApplicationRecord
   has_many :shoes
+  has_many :sales
+
   validates :name, uniqueness: true
 
   def name

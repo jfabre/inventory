@@ -4,12 +4,15 @@ class HomeController < ApplicationController
 			.sort_by(&:amount)
 			.reverse
 		@low_inventory = Shoe.low_inventory
+    @total_inventory = Shoe.sum(:quantity)
+    @total_sales = Sale.sum(:quantity_sold)
+    @sales_by_store = Sale.by_store
+    @sales_by_model = Sale.by_model
   end
 
 	def inventory
 		shoes = Shoe.joins(:store)
 			.joins(:model)
-			.order(:stores, :model) 
 			.includes(:store)
 			.includes(:model)
 

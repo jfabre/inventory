@@ -169,17 +169,14 @@
       .container-fluid
         .d-sm-flex.align-items-center.justify-content-between.mb-4
           %h1.h3.mb-0.text-gray-800 Inventory
-          %a.d-none.d-sm-inline-block.btn.btn-sm.btn-primary.shadow-sm{:href => "#"}
-            %i.fas.fa-download.fa-sm.text-white-50
-              Generate Report
         .row
           .col-xl-3.col-md-6.mb-4
             .card.border-left-primary.shadow.h-100.py-2
               .card-body
                 .row.no-gutters.align-items-center
                   .col.mr-2
-                    .text-xs.font-weight-bold.text-primary.text-uppercase.mb-1 Earnings (Monthly)
-                    .h5.mb-0.font-weight-bold.text-gray-800 $40,000
+                    .text-xs.font-weight-bold.text-primary.text-uppercase.mb-1 Total Inventory
+                    .h5.mb-0.font-weight-bold.text-gray-800= @total_inventory
                   .col-auto
                     %i.fas.fa-calendar.fa-2x.text-gray-300
           .col-xl-3.col-md-6.mb-4
@@ -187,38 +184,15 @@
               .card-body
                 .row.no-gutters.align-items-center
                   .col.mr-2
-                    .text-xs.font-weight-bold.text-success.text-uppercase.mb-1 Earnings (Annual)
-                    .h5.mb-0.font-weight-bold.text-gray-800 $215,000
+                    .text-xs.font-weight-bold.text-success.text-uppercase.mb-1 Total Sales
+                    .h5.mb-0.font-weight-bold.text-gray-800= @total_sales
                   .col-auto
                     %i.fas.fa-dollar-sign.fa-2x.text-gray-300
-          .col-xl-3.col-md-6.mb-4
-            .card.border-left-info.shadow.h-100.py-2
-              .card-body
-                .row.no-gutters.align-items-center
-                  .col.mr-2
-                    .text-xs.font-weight-bold.text-info.text-uppercase.mb-1 Tasks
-                    .row.no-gutters.align-items-center
-                      .col-auto
-                        .h5.mb-0.mr-3.font-weight-bold.text-gray-800 50%
-                      .col
-                        .progress.progress-sm.mr-2
-                          .progress-bar.bg-info{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "50", :role => "progressbar", :style => "width: 50%"}
-                            .col-auto
-                              %i.fas.fa-clipboard-list.fa-2x.text-gray-300
-          .col-xl-3.col-md-6.mb-4
-            .card.border-left-warning.shadow.h-100.py-2
-              .card-body
-                .row.no-gutters.align-items-center
-                  .col.mr-2
-                    .text-xs.font-weight-bold.text-warning.text-uppercase.mb-1 Pending Requests
-                    .h5.mb-0.font-weight-bold.text-gray-800 18
-                  .col-auto
-                    %i.fas.fa-comments.fa-2x.text-gray-300
         .row
           .col-xl-12.col-lg-12
             .card.shadow.mb-4
               .card-header.py-3.d-flex.flex-row.align-items-center.justify-content-between
-                %h6.m-0.font-weight-bold.text-primary Store Inventory by Model
+                %h6.m-0.font-weight-bold.text-primary Live Inventory
                 .dropdown.no-arrow
                   %a#dropdownMenuLink.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
                     %i.fas.fa-ellipsis-v.fa-sm.fa-fw.text-gray-400
@@ -231,54 +205,29 @@
               .card-body
                 %div#chart
           .col-xl-4.col-lg-5
-            .card.shadow.mb-4
-              .card-header.py-3.d-flex.flex-row.align-items-center.justify-content-between
-                %h6.m-0.font-weight-bold.text-primary Revenue Sources
-                .dropdown.no-arrow
-                  %a#dropdownMenuLink.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
-                    %i.fas.fa-ellipsis-v.fa-sm.fa-fw.text-gray-400
-                  .dropdown-menu.dropdown-menu-right.shadow.animated--fade-in{"aria-labelledby" => "dropdownMenuLink"}
-                    .dropdown-header Dropdown Header:
-                    %a.dropdown-item{:href => "#"} Action
-                    %a.dropdown-item{:href => "#"} Another action
-                    .dropdown-divider
-                    %a.dropdown-item{:href => "#"} Something else here
-              .card-body
-                .chart-pie.pt-4.pb-2
-                .mt-4.text-center.small
-                  %span.mr-2
-                    %i.fas.fa-circle.text-primary
-                    Direct
-                  %span.mr-2
-                    %i.fas.fa-circle.text-success
-                    Social
-                  %span.mr-2
-                    %i.fas.fa-circle.text-info
-                    Referral
         .row
           .col-lg-6.mb-4
             .card.shadow.mb-4
               .card-header.py-3
-                %h6.m-0.font-weight-bold.text-primary Top 10 Stores with Low Model Inventory
+                %h6.m-0.font-weight-bold.text-primary Top 5 Stores by Sales
               .card-body
-                - @low_inventory.each do |shoe|
+                - @sales_by_store.take(5).each do |name, qty|
                   %h4.small.font-weight-bold
-                    #{shoe.store.name}
-                    %span.float-right #{shoe.model.name}: #{shoe.quantity}
+                    #{name}
+                    %span.float-right #{qty}
                     .progress.mb-4
-                      %div{ class: "progress-bar #{low_inventory_class(shoe.quantity)}", "aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "10", :role => "progressbar", :style => "width: #{shoe.quantity_ratio.round(0)}%"}
+                      %div{ class: "progress-bar", "aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "10", :role => "progressbar", :style => "width: #{ratio(qty, @total_sales)}%"}
           .col-lg-6.mb-4
             .card.shadow.mb-4
               .card-header.py-3
-                %h6.m-0.font-weight-bold.text-primary Total Inventory by Model
+                %h6.m-0.font-weight-bold.text-primary Top 5 Models by Sales
               .card-body
-                - @models.each do |m|
+                - @sales_by_model.take(5).each do |name, qty|
                   %h4.small.font-weight-bold
-                    = m.name
-                    %span.float-right #{m.amount}
+                    = name.capitalize
+                    %span.float-right #{qty}
                     .progress.mb-4
-                      .progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "20", :role => "progressbar", :style => "width: #{m.ratio}%"}
-                      .progress-bar.bg-danger{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "20", :role => "progressbar", :style => "width: #{100.0 - m.ratio}%"}
+                      .progress-bar{"aria-valuemax" => "100", "aria-valuemin" => "0", "aria-valuenow" => "20", :role => "progressbar", :style => "width: #{ratio(qty, @total_sales)}%"}
     %footer.sticky-footer.bg-white
       .container.my-auto
         .copyright.text-center.my-auto

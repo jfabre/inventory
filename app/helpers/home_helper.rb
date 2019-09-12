@@ -8,4 +8,8 @@ module HomeHelper
 			'bg-success'
 		end
   end
+
+  def ratio amount, total
+    ((amount.to_f / total) * 100).round(1)
+  end
 end
