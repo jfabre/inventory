@@ -6,7 +6,8 @@ environment.plugins.append('Provide',
     $: 'jquery',
     jQuery: 'jquery',
     Popper: ['popper.js', 'default'],
-    d3: 'd3'
+    d3: 'd3',
+    HeathMap: 'charts.js'
   })
 )
 

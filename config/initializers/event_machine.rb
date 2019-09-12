@@ -22,5 +22,5 @@ module SocketClient
 end
 
 if Rails.const_defined? 'Server'
-  #SocketClient.start
+  SocketClient.start
 end

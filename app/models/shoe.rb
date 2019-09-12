@@ -3,6 +3,14 @@ class Shoe < ApplicationRecord
   belongs_to :store
 
   validates :model_id, uniqueness: { scope: :store_id } 
+  after_save do
+    data = { 
+      store_name: store.name, 
+      model_name: model.name, 
+      quantity: quantity 
+    }
+    ActionCable.server.broadcast("inventory", data)
+  end
 
 	def model_name
 		model.name
