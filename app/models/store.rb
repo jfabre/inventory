@@ -2,7 +2,6 @@ class Store < ApplicationRecord
   has_many :shoes
   validates :name, uniqueness: true
 
-
   # {"store"=>"ALDO Crossgates Mall", "model"=>"ADERI", "inventory"=>73}
   def self.update! data
     store_name = data["store"][5..-1]

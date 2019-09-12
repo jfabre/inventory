@@ -13,3 +13,12 @@
  *= require_tree .
  *= require_self
  */
+
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts'; 
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import "bootstrap/scss/bootstrap";
+@import "./sb-admin-2";
+
+@import "./_custom";
+@import "./home";

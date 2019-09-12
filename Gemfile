@@ -9,6 +9,7 @@ gem 'haml-rails'
 gem 'faye-websocket'
 gem 'eventmachine'
 gem 'awesome_print'
+gem 'foreman'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.4'

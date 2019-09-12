@@ -1,0 +1,3 @@
+web: bundle exec rails server --port $PORT
+watcher: ./bin/webpack --watch --colors --progress
+webpacker: ./bin/webpack-dev-server
