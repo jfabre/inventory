@@ -14,15 +14,11 @@ class Sale < ApplicationRecord
     end
   end
 
-  def self.by_store
-    joins(:store).group(:name).sum(:quantity_sold)
-      .sort_by {|k, v| v }
-      .reverse
-  end
-
-  def self.by_model
-    joins(:model).group(:name).sum(:quantity_sold)
-      .sort_by {|k, v| v }
-      .reverse
+  [:store, :model].each do |k|
+    self.define_singleton_method "by_#{k}" do
+      joins(k).group(:name).sum(:quantity_sold)
+        .sort_by {|k, v| v }
+        .reverse
+    end
   end
 end
