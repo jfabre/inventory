@@ -1,24 +1,19 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+This projects is a website that feeds off the shoe-store socket server
+It displays a heath map using d3.js and some metrics off the data it receives.
+The heathmap will update live with new data coming in.
 
-* Ruby version
+It uses foreman to load the websocket client, puma and and the webpacker services.
+The configuration is in Procfile.dev
 
-* System dependencies
+`bundle exec foreman start -f Procfile.dev`
 
-* Configuration
+It is currently configured to use:
 
-* Database creation
+- Postgresql as a database
+- Redis as the message queue for ActionCable
 
-* Database initialization
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+For a good experience, wait until there's enough data fed to the database before loading the webpage.
